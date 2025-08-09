@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlowCare - Skincare Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --primary-color: #ff6f91; /* Soft Pink */
+            --secondary-color: #ffe6f0; /* Light Pink */
+            --dark-color: #333;
+            --light-color: #fff;
+            --text-color: #555;
+            --border-radius: 12px;
+            --transition-speed: 0.3s;
+        }
+
+        /* General Styles */
+        body {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color var(--transition-speed), transform var(--transition-speed);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ff4d6d;
+            transform: translateY(-3px);
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            background-color: var(--light-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .main-nav {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .main-nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .main-nav li {
+            margin: 0 25px;
+        }
+
+        .main-nav a {
+            color: var(--dark-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color var(--transition-speed);
+        }
+
+        .main-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            transition: color var(--transition-speed);
+            margin-left: 20px;
+        }
+
+        .cart-icon:hover {
+            color: var(--primary-color);
+        }
+
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #ff4d6d;
+            color: var(--light-color);
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: none;
+        }
+        
+        /* Mobile Navbar Toggle */
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark-color);
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background-image: url("img/image.png");
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--light-color);
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Products Section --- */
+        .products-section {
+            padding: 4rem 0;
+            background-color: var(--light-color);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            padding-bottom: 1.5rem;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .product-card h3 {
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+        }
+
+        .product-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            padding: 0 1rem;
+        }
+
+        .product-card .price {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        /* --- Cart Modal --- */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background-color: var(--light-color);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .close-btn {
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color var(--transition-speed);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        #cart-items {
+            max-height: 40vh;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            margin-right: 15px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-details h4 {
+            margin: 0 0 5px 0;
+        }
+
+        .item-details .item-price {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            background-color: #f0f0f0;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .quantity-controls span {
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .remove-btn {
+            color: #e74c3c;
+            cursor: pointer;
+            margin-left: 20px;
+            font-size: 1rem;
+            transition: color var(--transition-speed);
+        }
+
+        .remove-btn:hover {
+            color: #c0392b;
+        }
+
+        .cart-summary {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--secondary-color);
+        }
+
+        .cart-summary .total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .checkout-form {
+            margin-top: 2rem;
+        }
+
+        .checkout-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .checkout-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* --- About Section --- */
+        .about-section {
+            padding: 4rem 0;
+            background: linear-gradient(to right, var(--secondary-color), var(--light-color));
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .about-content img {
+            flex: 1;
+            max-width: 500px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .about-text p {
+            color: var(--text-color);
+        }
+
+        /* --- Testimonials Section --- */
+        .testimonials-section {
+            padding: 4rem 0;
+            background-color: var(--light-color);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--secondary-color);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            font-style: italic;
+        }
+
+        .testimonial-card i {
+            color: var(--primary-color);
+            font-size: 2rem;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            opacity: 0.2;
+        }
+
+        .testimonial-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-card .customer-info {
+            font-weight: 600;
+            font-style: normal;
+            color: var(--dark-color);
+        }
+
+        /* --- Footer --- */
+        .main-footer {
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .social-links a {
+            color: var(--light-color);
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: transform var(--transition-speed);
+        }
+
+        .social-links a:hover {
+            transform: scale(1.2);
+            color: var(--secondary-color);
+        }
+
+        .footer-nav {
+            margin-top: 1.5rem;
+        }
+
+        .footer-nav a {
+            color: var(--light-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 400;
+            transition: color var(--transition-speed);
+        }
+
+        .footer-nav a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- Responsiveness (Media Queries) --- */
+
+        /* Desktop and larger screens (1024px and up) */
+        @media (min-width: 1024px) {
+            .main-nav {
+                display: block; /* Ensure the menu is always visible on large screens */
+            }
+        }
+
+        /* Tablets and smaller laptops (up to 1023px) */
+        @media (max-width: 1023px) {
+            .main-nav li {
+                margin: 0 15px; /* Adjust spacing for tablet size */
+            }
+            .about-content, .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .about-text {
+                margin-bottom: 2rem;
+            }
+            .about-content img {
+                margin-top: 0;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        /* Mobile devices (up to 768px) */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .logo {
+                flex-basis: 50%;
+                text-align: left;
+            }
+            .header-right {
+                flex-basis: 50%;
+                justify-content: flex-end;
+            }
+            .main-nav {
+                order: 3;
+                width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-in-out;
+            }
+            .main-nav.active {
+                max-height: 200px; /* Adjust height as needed */
+            }
+            .main-nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem 0;
+            }
+            .main-nav li {
+                margin: 0.5rem 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .about-content {
+                flex-direction: column;
+            }
+            .about-text {
+                text-align: center;
+            }
+            .about-text h2 {
+                text-align: center !important;
+            }
+            .cart-content {
+                padding: 1.5rem;
+                width: 95%;
+            }
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+                align-items: flex-start;
+            }
+            .cart-item img {
+                margin: 0 auto 10px;
+            }
+            .item-details {
+                text-align: center;
+                flex-grow: unset;
+                width: 100%;
+            }
+            .quantity-controls, .remove-btn {
+                margin: 10px auto 0;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container header-content">
+            <a href="#" class="logo">🌸 GlowCare</a>
+            <div class="menu-toggle" id="menu-toggle-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#products">Shop</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                </ul>
+            </nav>
+            <div class="header-right">
+                <div class="cart-icon" id="open-cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1>Discover Your Natural Radiance</h1>
+            <p>Premium skincare products crafted with natural ingredients for a healthy, glowing you.</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+    </section>
+
+    <section id="products" class="products-section">
+        <div class="container">
+            <h2 class="section-title">Our Best Sellers</h2>
+            <div class="product-grid">
+                <div class="product-card">
+                    <img src="img/image.png" alt="Hydrating Face Cream">
+                    <h3>Hydrating Face Cream</h3>
+                    <p>Deeply moisturizes and revitalizes your skin for a radiant, dewy glow. Perfect for all skin types.</p>
+                    <div class="price" data-price="25"><span>$25.00</span></div>
+                    <button class="btn add-to-cart-btn" 
+                        data-name="Hydrating Face Cream"
+                        data-price="25"
+                        data-image="img/image.png">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="img/image.png" alt="Vitamin C Serum">
+                    <h3>Vitamin C Serum</h3>
+                    <p>A potent antioxidant serum that brightens skin tone, fades dark spots, and reduces signs of aging.</p>
+                    <div class="price" data-price="30"><span>$30.00</span></div>
+                    <button class="btn add-to-cart-btn"
+                        data-name="Vitamin C Serum"
+                        data-price="30"
+                        data-image="img/image.png">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="img/image.png" alt="Clay Face Mask">
+                    <h3>Purifying Clay Mask</h3>
+                    <p>Detoxifies and purifies your skin naturally, leaving it feeling fresh, clean, and smooth.</p>
+                    <div class="price" data-price="15"><span>$15.00</span></div>
+                    <button class="btn add-to-cart-btn"
+                        data-name="Purifying Clay Mask"
+                        data-price="15"
+                        data-image="img/image.png">
+                        Add to Cart
+                    </button>
+                </div>
+                <div class="product-card">
+                    <img src="img/image.png" alt="Rose Toner">
+                    <h3>Rose Water Toner</h3>
+                    <p>Soothes and balances the skin, preparing it for moisture and promoting a calm complexion.</p>
+                    <div class="price" data-price="20"><span>$20.00</span></div>
+                    <button class="btn add-to-cart-btn"
+                        data-name="Rose Water Toner"
+                        data-price="20"
+                        data-image="img/image.png">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container about-content">
+            <div class="about-text">
+                <h2 class="section-title" style="text-align: left;">Our Philosophy</h2>
+                <p>At **GlowCare**, we believe in the power of nature to nurture your skin. Our mission is to create effective, clean, and cruelty-free skincare products that help you achieve a healthy, radiant glow. We source the finest natural ingredients to deliver a luxurious and safe experience for all skin types.</p>
+                <p>Our commitment to quality means every product is formulated with care, free from harsh chemicals, and designed to bring out your natural beauty. Join us on a journey to healthier, happier skin.</p>
+            </div>
+            <img src="img/image.png" alt="Skincare bottles and flowers">
+        </div>
+    </section>
+
+    <section id="testimonials" class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title">What Our Customers Say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right"></i>
+                    <p>"I've struggled with sensitive skin for years, and GlowCare's products are the only ones that have made a real difference without causing irritation. My skin has never looked better!"</p>
+                    <div class="customer-info">- Sarah M.</div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right"></i>
+                    <p>"The Vitamin C serum is a game-changer! My complexion is brighter and more even, and the dark spots are fading. I can't recommend it enough."</p>
+                    <div class="customer-info">- Jessica L.</div>
+                </div>
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right"></i>
+                    <p>"The Hydrating Face Cream is my new go-to. It's so rich and luxurious, and my skin feels incredibly soft and plump all day. Plus, it smells amazing!"</p>
+                    <div class="customer-info">- Emily R.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container footer-content">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+            <nav class="footer-nav">
+                <a href="#home">Home</a>
+                <a href="#products">Shop</a>
+                <a href="#about">About</a>
+                <a href="#">Privacy Policy</a>
+            </nav>
+            <div class="copyright">&copy; 2025 GlowCare. All Rights Reserved.</div>
+        </div>
+    </footer>
+
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <span class="close-btn" id="close-cart-btn">&times;</span>
+            </div>
+            <div id="cart-items">
+                </div>
+            <div class="cart-summary">
+                <div class="total">
+                    <span>Total:</span>
+                    <span id="cart-total">$0.00</span>
+                </div>
+            </div>
+            <div class="checkout-form">
+                <h3 style="color: var(--primary-color)">Customer Information</h3>
+                <label for="customer-name">Full Name</label>
+                <input type="text" id="customer-name" placeholder="Enter your full name" required>
+
+                <label for="customer-address">Shipping Address</label>
+                <input type="text" id="customer-address" placeholder="e.g., Street, City, Province" required>
+
+                <label for="customer-phone">Phone Number</label>
+                <input type="tel" id="customer-phone" placeholder="e.g., 01xxxxxxxxx" required>
+            </div>
+            <button class="btn" id="checkout-btn" style="width: 100%; margin-top: 1rem">Checkout on WhatsApp</button>
+        </div>
+    </div>
+
+    <script>
+        const whatsappNumber = "201143894042"; // The number without the '+' sign
+        const cart = [];
+
+        const cartCountElement = document.getElementById("cart-count");
+        const cartModal = document.getElementById("cart-modal");
+        const openCartBtn = document.getElementById("open-cart-btn");
+        const closeCartBtn = document.getElementById("close-cart-btn");
+        const cartItemsContainer = document.getElementById("cart-items");
+        const cartTotalElement = document.getElementById("cart-total");
+        const checkoutBtn = document.getElementById("checkout-btn");
+        const menuToggleBtn = document.getElementById("menu-toggle-btn");
+        const mainNav = document.getElementById("main-nav");
+
+        // Mobile menu toggle
+        menuToggleBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Add to Cart Logic
+        document.querySelectorAll(".add-to-cart-btn").forEach((button) => {
+            button.addEventListener("click", () => {
+                const name = button.getAttribute("data-name");
+                const price = parseFloat(button.getAttribute("data-price"));
+                const image = button.getAttribute("data-image");
+
+                const existingItem = cart.find((item) => item.name === name);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name, price, image, quantity: 1 });
+                }
+
+                updateCartCount();
+                renderCart();
+            });
+        });
+
+        // Open/Close Cart Modal
+        openCartBtn.addEventListener("click", () => {
+            cartModal.style.display = "flex";
+        });
+
+        closeCartBtn.addEventListener("click", () => {
+            cartModal.style.display = "none";
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener("click", (event) => {
+            if (event.target === cartModal) {
+                cartModal.style.display = "none";
+            }
+        });
+
+        // Update Cart Counter
+        function updateCartCount() {
+            const totalItems = cart.reduce(
+                (total, item) => total + item.quantity,
+                0
+            );
+            cartCountElement.textContent = totalItems;
+            if (totalItems > 0) {
+                cartCountElement.style.display = "block";
+            } else {
+                cartCountElement.style.display = "none";
+            }
+        }
+
+        // Render Cart Items
+        function renderCart() {
+            cartItemsContainer.innerHTML = "";
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML =
+                    '<p style="text-align: center; color: var(--text-color);">Your cart is empty.</p>';
+            } else {
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement("div");
+                    cartItem.classList.add("cart-item");
+                    cartItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="item-details">
+                            <h4>${item.name}</h4>
+                            <div class="item-price">$${(
+                                item.price * item.quantity
+                            ).toFixed(2)}</div>
+                            <small>Price per item: $${item.price.toFixed(
+                                2
+                            )}</small>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-minus" data-index="${index}">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-plus" data-index="${index}">+</button>
+                        </div>
+                        <span class="remove-btn" data-index="${index}">&times;</span>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                    total += item.price * item.quantity;
+                });
+            }
+
+            cartTotalElement.textContent = `$${total.toFixed(2)}`;
+            updateCartCount();
+        }
+
+        // Handle Quantity Changes and Removal
+        cartItemsContainer.addEventListener("click", (event) => {
+            if (event.target.classList.contains("quantity-plus")) {
+                const index = event.target.getAttribute("data-index");
+                cart[index].quantity++;
+                renderCart();
+            }
+            if (event.target.classList.contains("quantity-minus")) {
+                const index = event.target.getAttribute("data-index");
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                }
+                renderCart();
+            }
+            if (event.target.classList.contains("remove-btn")) {
+                const index = event.target.getAttribute("data-index");
+                cart.splice(index, 1);
+                renderCart();
+            }
+        });
+
+        // Checkout via WhatsApp Logic
+        checkoutBtn.addEventListener("click", () => {
+            const customerName = document.getElementById("customer-name").value;
+            const customerAddress = document.getElementById("customer-address").value;
+            const customerPhone = document.getElementById("customer-phone").value;
+
+            if (!customerName || !customerAddress || !customerPhone) {
+                alert("Please fill out all customer information fields.");
+                return;
+            }
+
+            if (cart.length === 0) {
+                alert("Your cart is empty. Please add items to proceed.");
+                return;
+            }
+
+            let message =
+                "Hello, I would like to place an order from GlowCare:\n\n";
+            message += "--- Order Details ---\n";
+            let total = 0;
+            cart.forEach((item) => {
+                message += `* Product: ${item.name}\n`;
+                message += `* Quantity: ${item.quantity}\n`;
+                message += `* Price: $${(item.price * item.quantity).toFixed(2)}\n\n`;
+                total += item.price * item.quantity;
+            });
+            message += `* Total Price: $${total.toFixed(2)}\n\n`;
+            message += "--- Customer Information ---\n";
+            message += `* Full Name: ${customerName}\n`;
+            message += `* Shipping Address: ${customerAddress}\n`;
+            message += `* Phone Number: ${customerPhone}\n\n`;
+            message += "Thank you!";
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(whatsappURL, "_blank");
+        });
+
+        // Smooth Scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute("href")).scrollIntoView({
+                    behavior: "smooth",
+                });
+                mainNav.classList.remove('active'); // Close menu on link click
+            });
+        });
+    </script>
+</body>
+</html>
